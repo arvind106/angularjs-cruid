@@ -1,0 +1,135 @@
+<!doctype html>
+<html ng-app="app">
+
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-datatables/0.6.4/angular-datatables.js"></script>
+  <script src="js/custom.js"></script>
+
+</head>
+
+<body>
+
+  <div ng-controller="mycontroller">
+    <div class="jumbotron text-center">
+      <h4>Angular JS CRUID Operation</h4>
+    </div>
+    <div class="container">
+      <div class="row">
+
+        <div class="alert alert-success alert-dismissible" ng-if="succsessMessage">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Success!</strong> {{succsessMessage}}
+        </div>
+
+
+
+
+
+        <div class="pull-right">
+          <button type="button" name="add_button" ng-click="addData()" class="btn btn-success">Add</button>
+        </div><br>
+
+
+        <table datatable="ng" dt-options="vm-dtOptions" class="table table-striped">
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>City</th>
+              <th>Address</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr ng-repeat="user in users">
+              <td>{{user.f_name}}</td>
+              <td>{{user.l_name}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.city}}</td>
+              <td>{{user.address}}</td>
+              <td><button type="button" ng-click="fetchSingleData(user._id)"
+                  class="btn btn-warning btn-xs">Edit</button>
+                <button type="button" ng-click="deleteData(user._id)" class="btn btn-danger btn-xs">Delete</button></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="modal fade" tabindex="-1" role="dialog" id="crudmodal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form method="post" ng-submit="submitForm()">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Model</h4>
+
+                <div ng-if="errorMessage">
+                  <div class="alert alert-danger alert-dismissible" ng-repeat="err in errorMessage">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Error!</strong> {{err}}
+                  </div>
+                </div>
+
+              </div>
+              <div class="modal-body">
+                <div class="alert alert-danger alert-dismissible" ng-show="error">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  
+                </div>
+
+                <div class="form-group">
+                  <label>Enter First Name</label>
+                  <input type="text" name="f_name" ng-model="f_name" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                  <label>Enter Last Name</label>
+                  <input type="text" name="l_name" ng-model="l_name" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                  <label>Enter Email</label>
+                  <input type="text" name="email" ng-model="email" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                  <label>Enter City</label>
+                  <input type="text" name="city" ng-model="city" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                  <label>Enter Address</label>
+                  <input type="text" name="address" ng-model="address" class="form-control" />
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <input type="hidden" name="hidden_id" value="{{hidden_id}}" />
+                <input type="submit" name="submit" id="submit" class="btn btn-info" value="{{submit_button}}" />
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="footer">2021@All right reserverd</div>
+</body>
+
+</html>
